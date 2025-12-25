@@ -1,0 +1,362 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap');
+
+@layer base {
+  :root {
+    /* Deep charcoal background - not pure black */
+    --background: 240 6% 11%;
+    --foreground: 40 20% 90%;
+
+    /* Card surfaces - slightly elevated */
+    --card: 240 5% 14%;
+    --card-foreground: 40 20% 90%;
+
+    --popover: 240 5% 14%;
+    --popover-foreground: 40 20% 90%;
+
+    /* Muted amber accent - restrained warmth */
+    --primary: 43 45% 56%;
+    --primary-foreground: 240 6% 11%;
+
+    /* Secondary - muted grey */
+    --secondary: 240 4% 20%;
+    --secondary-foreground: 40 15% 75%;
+
+    /* Muted elements */
+    --muted: 240 4% 18%;
+    --muted-foreground: 40 10% 55%;
+
+    /* Accent matches primary */
+    --accent: 43 45% 56%;
+    --accent-foreground: 240 6% 11%;
+
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 40 20% 90%;
+
+    --border: 240 5% 22%;
+    --input: 240 5% 22%;
+    --ring: 43 45% 56%;
+
+    --radius: 0.25rem;
+
+    /* Book-specific tokens */
+    --book-paper: 40 20% 90%;
+    --book-ink: 240 6% 11%;
+    --book-spine: 240 5% 8%;
+    --book-texture: 240 4% 16%;
+    --book-shadow: 240 10% 5%;
+
+    /* Typography */
+    --font-serif: 'Libre Baskerville', Georgia, serif;
+    --font-mono: 'JetBrains Mono', 'Consolas', monospace;
+    --font-sans: 'Inter', -apple-system, sans-serif;
+
+    /* Animation timings */
+    --ease-book: cubic-bezier(0.4, 0, 0.2, 1);
+    --duration-page: 800ms;
+    --duration-fade: 400ms;
+
+    /* Sidebar - dark theme */
+    --sidebar-background: 240 5% 10%;
+    --sidebar-foreground: 40 15% 75%;
+    --sidebar-primary: 43 45% 56%;
+    --sidebar-primary-foreground: 240 6% 11%;
+    --sidebar-accent: 240 4% 18%;
+    --sidebar-accent-foreground: 40 20% 90%;
+    --sidebar-border: 240 5% 18%;
+    --sidebar-ring: 43 45% 56%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-serif);
+    line-height: 1.7;
+  }
+
+  /* Reduce motion support */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Book typography */
+  .font-serif {
+    font-family: var(--font-serif);
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  .font-sans {
+    font-family: var(--font-sans);
+  }
+
+  /* Book texture overlay */
+  .book-texture {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+  }
+
+  /* Page container */
+  .book-page {
+    @apply relative min-h-screen w-full overflow-hidden;
+  }
+
+  /* Subtle link underline animation */
+  .book-link {
+    @apply relative inline-block text-primary transition-colors duration-300;
+  }
+
+  .book-link::after {
+    content: '';
+    @apply absolute bottom-0 left-0 h-px w-0 bg-primary transition-all duration-300;
+    transition-timing-function: var(--ease-book);
+  }
+
+  .book-link:hover::after {
+    @apply w-full;
+  }
+
+  /* Focus indicator - quiet and accessible */
+  .book-focus {
+    @apply outline-none ring-1 ring-primary/40 ring-offset-2 ring-offset-background;
+  }
+
+  /* Code block styling */
+  .book-code {
+    @apply font-mono text-sm bg-muted/50 px-1.5 py-0.5 rounded text-muted-foreground;
+  }
+
+  /* Page number styling */
+  .page-number {
+    @apply font-mono text-xs tracking-widest text-muted-foreground uppercase;
+  }
+
+  /* Chapter heading */
+  .chapter-heading {
+    @apply font-serif text-3xl md:text-4xl font-normal tracking-tight text-foreground;
+  }
+
+  /* Section marker */
+  .section-marker {
+    @apply w-8 h-px bg-primary/60;
+  }
+}
+
+@layer utilities {
+  /* Fade in animation */
+  .animate-fade-in {
+    animation: fadeIn var(--duration-fade) var(--ease-book) forwards;
+  }
+
+  .animate-fade-in-delayed {
+    opacity: 0;
+    animation: fadeIn var(--duration-fade) var(--ease-book) 200ms forwards;
+  }
+
+  .animate-fade-in-delayed-2 {
+    opacity: 0;
+    animation: fadeIn var(--duration-fade) var(--ease-book) 400ms forwards;
+  }
+
+  .animate-fade-in-delayed-3 {
+    opacity: 0;
+    animation: fadeIn var(--duration-fade) var(--ease-book) 600ms forwards;
+  }
+
+  /* Button fade in after 1 second */
+  .animate-button-fade-in {
+    animation: fadeIn 600ms var(--ease-book) 1000ms forwards;
+  }
+
+  /* Book spine close animation */
+  .animate-spine-close {
+    animation: spineClose 1.2s var(--ease-book) forwards;
+  }
+
+  /* Page slide animations */
+  .animate-page-enter {
+    animation: pageEnter var(--duration-page) var(--ease-book) forwards;
+  }
+
+  .animate-page-exit {
+    animation: pageExit var(--duration-page) var(--ease-book) forwards;
+  }
+
+  /* Book page turn animation - 3D flip effect */
+  .animate-page-turn {
+    animation: pageTurnForward 700ms var(--ease-book) forwards;
+    transform-style: preserve-3d;
+  }
+
+  .animate-page-turn-back {
+    animation: pageTurnBackward 700ms var(--ease-book) forwards;
+    transform-style: preserve-3d;
+  }
+
+  /* Cover open animation */
+  .animate-cover-open {
+    animation: coverOpen 1200ms var(--ease-book) forwards;
+  }
+
+  /* Subtle float for icons */
+  .animate-subtle-float {
+    animation: subtleFloat 6s ease-in-out infinite;
+  }
+
+  /* Text reveal */
+  .animate-text-reveal {
+    animation: textReveal 800ms var(--ease-book) forwards;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pageExit {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+}
+
+/* Book page turn - forward (next page) - flips in from right */
+@keyframes pageTurnForward {
+  0% {
+    opacity: 0;
+    transform: perspective(1500px) rotateY(90deg);
+    transform-origin: left center;
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(1500px) rotateY(0deg);
+    transform-origin: left center;
+  }
+}
+
+/* Book page turn - backward (previous page) - flips in from left */
+@keyframes pageTurnBackward {
+  0% {
+    opacity: 0;
+    transform: perspective(1500px) rotateY(-90deg);
+    transform-origin: right center;
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(1500px) rotateY(0deg);
+    transform-origin: right center;
+  }
+}
+
+@keyframes coverOpen {
+  0% {
+    transform: perspective(1200px) rotateY(0deg);
+    transform-origin: left center;
+  }
+  100% {
+    transform: perspective(1200px) rotateY(-15deg);
+    transform-origin: left center;
+  }
+}
+
+@keyframes subtleFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes textReveal {
+  from {
+    opacity: 0;
+    letter-spacing: 0.2em;
+  }
+  to {
+    opacity: 1;
+    letter-spacing: 0.05em;
+  }
+}
+
+@keyframes spineClose {
+  0% {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+/* Swipe hand animation for tutorial */
+@keyframes swipeHand {
+  0%, 100% {
+    transform: translateX(0);
+    opacity: 0.8;
+  }
+  25% {
+    transform: translateX(40px);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(0);
+    opacity: 0.8;
+  }
+  75% {
+    transform: translateX(-40px);
+    opacity: 1;
+  }
+}
+
+.swipe-hand-animation {
+  animation: swipeHand 2.5s ease-in-out infinite;
+}

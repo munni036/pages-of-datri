@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Background -->
+  <rect width="64" height="64" rx="12" fill="#0E0E11"></rect>
+
+  <!-- Left page -->
+  <path d="M12 18
+           Q26 14 32 20
+           V46
+           Q26 42 12 44 Z" fill="#FFFFFF"></path>
+
+  <!-- Right page -->
+  <path d="M52 18
+           Q38 14 32 20
+           V46
+           Q38 42 52 44 Z" fill="#D6D6D6"></path>
+
+  <!-- Spine -->
+  <line x1="32" y1="20" x2="32" y2="46" stroke="#0E0E11" stroke-width="1"></line>
+
+  <!-- Letter D -->
+  <text x="32" y="36" text-anchor="middle" font-size="18" font-family="Georgia, serif" font-weight="bold" fill="#F5C451">
+    D
+  </text>
+</svg>
